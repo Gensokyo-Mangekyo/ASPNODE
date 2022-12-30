@@ -6,7 +6,7 @@ namespace ASPNET.Controllers
     {
         public string Index()
         {
-            return "Hello ASP NET";
+            return "ASP NET";
         }
     }
 }

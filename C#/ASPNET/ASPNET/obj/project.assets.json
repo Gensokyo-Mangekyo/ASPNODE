@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\ThreeBackend\\C#\\ASPNET\\ASPNET\\ASPNET.csproj",
+      "projectUniqueName": "F:\\ASPNODE\\C#\\ASPNET\\ASPNET\\ASPNET.csproj",
       "projectName": "ASPNET",
-      "projectPath": "F:\\ThreeBackend\\C#\\ASPNET\\ASPNET\\ASPNET.csproj",
+      "projectPath": "F:\\ASPNODE\\C#\\ASPNET\\ASPNET\\ASPNET.csproj",
       "packagesPath": "C:\\Users\\Администратор\\.nuget\\packages\\",
-      "outputPath": "F:\\ThreeBackend\\C#\\ASPNET\\ASPNET\\obj\\",
+      "outputPath": "F:\\ASPNODE\\C#\\ASPNET\\ASPNET\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Администратор\\AppData\\Roaming\\NuGet\\NuGet.Config",
