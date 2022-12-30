@@ -3,19 +3,64 @@ import axios from 'axios'
 
 
 function App() {
-  const [nodejs,setNodeJs] = useState<string>()
-  const [asp,setAsp] = useState<string>()
+
+  interface Skill {
+    nameSkill: string,
+    cd: number
+  }
+  //ОШИБКА РЕГИСТР первой буквы: Если первая буква c большой задана тогда проосто не найдёт поле Name ~= name
+  interface Character {
+      name: string,
+      surname: string,
+      description: string,
+      skills: Skill[]
+  }  
+  
+
+  const [nodejs,setNodeJs] = useState<Character>()
+  const [asp,setAsp] = useState<Character>()
   useEffect(() => {
     return () => {
-        axios.get("http://localhost:2000").then((resp) => {setNodeJs(resp.data) }).catch(() => console.log("Error"))
-        axios.get("https://localhost:7200").then((resp) => {setAsp(resp.data) }).catch(() => console.log("Error"))
+        axios.get<Character>("http://localhost:2000").then((resp) => {
+          setNodeJs((resp.data))  
+          let character: Character = {
+            name: "Marisa" ,
+            surname: "Kirisame",
+            description: 'She lives in magic forest',
+            skills: [ {nameSkill: "Master Spark", cd: 7}, {nameSkill: "Final Spark", cd: 9}]
+          }
+          axios.post("http://localhost:2000/character",character).then((resp) => console.log(resp.data)).catch(() => console.log("Error"))
+        }).catch(() => console.log("Error"))
+        axios.get<Character>("https://localhost:7200").then(
+          (resp) => {setAsp((resp.data)) 
+            let character: Character = {
+              name: "Marisa" ,
+              surname: "Kirisame",
+              description: 'She lives in magic forest',
+              skills: [ {nameSkill: "Master Spark", cd: 7}, {nameSkill: "Final Spark", cd: 9}]
+            }
+            let name : string = "fw"
+            //Передаю JSON возникает ошибка catch((e) => console.log(e)). Ничего не передаю всё успешно работает
+            //Передаю строку где параметр name в контроллере тоже name. Свойства name пустое в итоге возращется Hello  
+            axios.post("https://localhost:7200/character",{name: "String"}).then((resp) => console.log(resp.data)).catch((e) => console.log(e))
+       }).catch(() => console.log("Error"))
     }
   },[])
 
   return (
     <div >
-     <p>Hello {nodejs}</p> 
-     <p>Hello {asp}</p> 
+    <h1>Answer from Asp.NET</h1>
+      <p>Name: {asp?.name}</p>
+      <p>Surname: {asp?.surname}</p>
+      <p>Description : {asp?.description}</p>
+      <h2>Skills</h2>
+      {asp?.skills.map((x) => <div >  <p>Name Skill: {x.nameSkill} </p> <p>Cd Skill {x.cd} </p>  </div>)}
+      <h1>Answer from NodeJS</h1>
+      <p>Name: {nodejs?.name}</p>
+      <p>Surname: {nodejs?.surname}</p>
+      <p>Description : {nodejs?.description}</p>
+      <h2>Skills</h2>
+      {nodejs?.skills.map((x) => <div >  <p>Name Skill: {x.nameSkill} </p> <p>Cd Skill {x.cd} </p>  </div>)}
     </div>
   );
 }
