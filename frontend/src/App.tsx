@@ -33,16 +33,6 @@ function App() {
         }).catch(() => console.log("Error"))
         axios.get<Character>("https://localhost:7200").then(
           (resp) => {setAsp((resp.data)) 
-            let character: Character = {
-              name: "Marisa" ,
-              surname: "Kirisame",
-              description: 'She lives in magic forest',
-              skills: [ {nameSkill: "Master Spark", cd: 7}, {nameSkill: "Final Spark", cd: 9}]
-            }
-            let name : string = "fw"
-            //Передаю JSON возникает ошибка catch((e) => console.log(e)). Ничего не передаю всё успешно работает
-            //Передаю строку где параметр name в контроллере тоже name. Свойства name пустое в итоге возращется Hello  
-            axios.post("https://localhost:7200/character",{name: "String"}).then((resp) => console.log(resp.data)).catch((e) => console.log(e))
        }).catch(() => console.log("Error"))
     }
   },[])
