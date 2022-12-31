@@ -47,19 +47,17 @@ namespace ASPNET.Controllers
         [HttpPost]
         public string PostCharacter()
         {
-            //ТЕСТ БЛЯДЬ НА POSTMAN прошёл а на React ему похуй!!!
-            //var options = new JsonSerializerOptions();
-            //options.PropertyNameCaseInsensitive = true; //Указыаваем что мы игнорируем регистр полей 
-            //if (Request.HasJsonContentType()) //Если контент type json 
-            //{
-            //    Character? chara = Request.ReadFromJsonAsync<Character>(options).Result; //Переводим json в класс Character
-            //   
-            //}
-            //return Request.ContentType;
-            //JSOB не удался :(
-            if (Request.ContentType.StartsWith("multipart/form-data"))
-                return Request.Form["name"];
-            else return "I am accepting only multipart/form-data";
+
+            var options = new JsonSerializerOptions();
+            options.PropertyNameCaseInsensitive = true; //Указыаваем что мы игнорируем регистр полей 
+            if (Request.HasJsonContentType()) //Если контент type json 
+            {
+                Character? chara = Request.ReadFromJsonAsync<Character>(options).Result; //Переводим json в класс Character
+                return "Hello " + chara?.Name;
+            }
+            return "Content type not equals application/json";
+
+
 
 
 

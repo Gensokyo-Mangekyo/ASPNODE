@@ -33,6 +33,13 @@ function App() {
         }).catch(() => console.log("Error"))
         axios.get<Character>("https://localhost:7200").then(
           (resp) => {setAsp((resp.data)) 
+            let character: Character = {
+              name: "Yukari" ,
+              surname: "Yakumo",
+              description: 'Youkai borders',
+              skills: [ {nameSkill: "GAP", cd: 7}, {nameSkill: "GAP2", cd: 9}]
+            }
+            axios.post("https://localhost:7200/character",character).then((resp) => console.log(resp.data)).catch(() => console.log("Error"))
        }).catch(() => console.log("Error"))
     }
   },[])

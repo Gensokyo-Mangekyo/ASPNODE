@@ -3,9 +3,11 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddControllersWithViews(); // добавл€ем сервисы MVC
 builder.Services.AddCors(options =>
 {
+   
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
+                          policy.AllowAnyHeader();//»з-за этой херни не работал JSON в ASP.NET
                           policy.AllowAnyOrigin(); //”казываем что можно обрабаывать любые запросы от приложений
                       });
 });
