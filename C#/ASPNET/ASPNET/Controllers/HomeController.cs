@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace ASPNET.Controllers
 {
@@ -37,31 +38,38 @@ namespace ASPNET.Controllers
     {
 
 
-        public JsonResult Index()
+        public string Index()
         {
-            var skills = new Skill[2] { new Skill("Bad Apple", 5), new Skill("Taboo Tears you", 7) };
-            return new JsonResult(new Character("Flander", "Scarlet", "Vampire lives in big mansion",skills));
-
-        }
-        [Route("character")]
-        [HttpPost]
-        public string PostCharacter()
-        {
-
-            var options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true; //Указыаваем что мы игнорируем регистр полей 
-            if (Request.HasJsonContentType()) //Если контент type json 
+            XDocument xdoc = XDocument.Load("character.xml");
+            // получаем корневой узел
+            XElement? character = xdoc.Element("character");
+            var Skills = character?.Element("Skills");
+            if ((Skills?.HasElements) is not null)
             {
-                Character? chara = Request.ReadFromJsonAsync<Character>(options).Result; //Переводим json в класс Character
-                return "Hello " + chara?.Name;
+
+                //var names = Skills?.Elements("Skill").Where(x => x.Attribute("Name")?.Value == "Night Bird");
+                var names = Skills?.Elements("Skill");
+                if (names is not null)
+                {
+                    foreach (var x in names)
+                    {
+                        Console.WriteLine("Имя скилла " + x.Attribute("Name")?.Value + " Cd " + x.Attribute("Cd")?.Value);
+                    }
+                }
             }
-            return "Content type not equals application/json";
-
-
-
-
+            XDocument newxdoc = new XDocument(new XElement("character",
+     new XElement("Name", "Marisa"),
+      new XElement("Description", "Magic Forset"),
+         new XElement("Skills",
+         new XElement("Skill", new XAttribute("Name", "Master Spark"), new XAttribute("Cd", "2")),
+         new XElement("Skill", new XAttribute("Name", "Final Spark"), new XAttribute("Cd", "5"))
+         )
+         ));
+            newxdoc.Save("newcharacter.xml");
+            return "Hello " + character?.Element("Name")?.Value + ". Hello " + newxdoc?.Element("character")?.Element("Name")?.Value;
 
         }
+
 
     }
 }

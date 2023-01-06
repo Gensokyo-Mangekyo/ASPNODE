@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+  <character >
+    <Name>Rumia</Name>
+    <Description>Youkai of Darkness</Description>
+    <Skills> 
+    <Skill Name ="Night Bird" Cd = 2></Skill>
+    <Skill Name ="Moonlight Lasers" Cd = 7></Skill>
+    </Skills>
+  </character>
